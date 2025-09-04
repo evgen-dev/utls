@@ -1,7 +1,7 @@
 package tls
 
 import (
-	"github.com/refraction-networking/utls/internal/hpke"
+	"github.com/evgen-dev/utls/internal/hpke"
 )
 
 type HPKERawPublicKey = []byte
