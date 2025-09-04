@@ -1008,6 +1008,7 @@ func (c *Conn) writeRecordLocked(typ recordType, data []byte) (int, error) {
 		_, outBuf = sliceForAppend(outBuf[:0], recordHeaderLen)
 		outBuf[0] = byte(typ)
 		vers := c.vers
+
 		if vers == 0 {
 			// Some TLS servers fail if the record version is
 			// greater than TLS 1.0 for the initial ClientHello.
@@ -1017,6 +1018,15 @@ func (c *Conn) writeRecordLocked(typ recordType, data []byte) (int, error) {
 			// See RFC 8446, Section 5.1.
 			vers = VersionTLS12
 		}
+
+		fv := c.config.ForcedRecordLayerVersion
+		if fv > 0 {
+			if fv != VersionTLS10 && fv != VersionTLS11 && fv != VersionTLS12 && fv != VersionTLS13 {
+				return n, fmt.Errorf("config: ForcedRecordLayerVersion contains unsupported TLS version %d", fv)
+			}
+			vers = fv
+		}
+
 		outBuf[1] = byte(vers >> 8)
 		outBuf[2] = byte(vers)
 		outBuf[3] = byte(m >> 8)

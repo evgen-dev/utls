@@ -549,6 +549,9 @@ const (
 // modified. A Config may be reused; the tls package will also not
 // modify it.
 type Config struct {
+	//Setup FORCED layer record version
+	ForcedRecordLayerVersion uint16
+
 	// Rand provides the source of entropy for nonces and RSA blinding.
 	// If Rand is nil, TLS uses the cryptographic random reader in package
 	// crypto/rand.

@@ -13,10 +13,10 @@ import (
 	"io"
 
 	"github.com/andybalholm/brotli"
-	"github.com/klauspost/compress/zstd"
 	"github.com/evgen-dev/utls/internal/fips140tls"
 	"github.com/evgen-dev/utls/internal/hpke"
 	"github.com/evgen-dev/utls/internal/tls13"
+	"github.com/klauspost/compress/zstd"
 )
 
 // This function is called by (*clientHandshakeStateTLS13).readServerCertificate()
